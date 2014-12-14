@@ -1,0 +1,25 @@
+{
+  "name": "mat3",
+  "version": "0.0.1",
+  "description": "mat3 for the browser and node.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nathanfaucett/mat3.git"
+  },
+  "main": "src/index.js",
+  "keywords": [
+    "mat3",
+    "mat3.js"
+  ],
+  "author": "Nathan Faucett",
+  "license": "BSD-2-Clause",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "grunt": "",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-jsbeautifier": ""
+  },
+  "dependencies": {
+    "mathf": "nathanfaucett/mathf"
+  }
+}
