@@ -4,8 +4,11 @@ var mathf = require("mathf");
 var mat3 = module.exports;
 
 
+mat3.ArrayType = typeof(Float32Array) !== "undefined" ? Float32Array : mathf.ArrayType;
+
+
 mat3.create = function(m11, m12, m13, m21, m22, m23, m31, m32, m33) {
-    var out = new mathf.ArrayType(9);
+    var out = new mat3.ArrayType(9);
 
     out[0] = m11 !== undefined ? m11 : 1;
     out[1] = m21 !== undefined ? m21 : 0;
@@ -36,7 +39,7 @@ mat3.copy = function(out, a) {
 };
 
 mat3.clone = function(a) {
-    var out = new mathf.ArrayType(9);
+    var out = new mat3.ArrayType(9);
 
     out[0] = a[0];
     out[1] = a[1];
