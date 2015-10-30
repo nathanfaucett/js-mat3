@@ -1,4 +1,5 @@
-var mathf = require("mathf");
+var mathf = require("mathf"),
+    isNumber = require("is_number");
 
 
 var mat3 = exports;
@@ -10,15 +11,15 @@ mat3.ArrayType = typeof(Float32Array) !== "undefined" ? Float32Array : mathf.Arr
 mat3.create = function(m11, m12, m13, m21, m22, m23, m31, m32, m33) {
     var out = new mat3.ArrayType(9);
 
-    out[0] = m11 !== undefined ? m11 : 1;
-    out[1] = m21 !== undefined ? m21 : 0;
-    out[2] = m31 !== undefined ? m31 : 0;
-    out[3] = m12 !== undefined ? m12 : 0;
-    out[4] = m22 !== undefined ? m22 : 1;
-    out[5] = m32 !== undefined ? m32 : 0;
-    out[6] = m13 !== undefined ? m13 : 0;
-    out[7] = m23 !== undefined ? m23 : 0;
-    out[8] = m33 !== undefined ? m33 : 1;
+    out[0] = isNumber(m11) ? m11 : 1;
+    out[1] = isNumber(m21) ? m21 : 0;
+    out[2] = isNumber(m31) ? m31 : 0;
+    out[3] = isNumber(m12) ? m12 : 0;
+    out[4] = isNumber(m22) ? m22 : 1;
+    out[5] = isNumber(m32) ? m32 : 0;
+    out[6] = isNumber(m13) ? m13 : 0;
+    out[7] = isNumber(m23) ? m23 : 0;
+    out[8] = isNumber(m33) ? m33 : 1;
 
     return out;
 };
@@ -56,15 +57,15 @@ mat3.clone = function(a) {
 
 mat3.set = function(out, m11, m12, m13, m21, m22, m23, m31, m32, m33) {
 
-    out[0] = m11 !== undefined ? m11 : 1;
-    out[1] = m21 !== undefined ? m21 : 0;
-    out[2] = m31 !== undefined ? m31 : 0;
-    out[3] = m12 !== undefined ? m12 : 0;
-    out[4] = m22 !== undefined ? m22 : 1;
-    out[5] = m32 !== undefined ? m32 : 0;
-    out[6] = m13 !== undefined ? m13 : 0;
-    out[7] = m23 !== undefined ? m23 : 0;
-    out[8] = m33 !== undefined ? m33 : 1;
+    out[0] = isNumber(m11) ? m11 : 1;
+    out[1] = isNumber(m21) ? m21 : 0;
+    out[2] = isNumber(m31) ? m31 : 0;
+    out[3] = isNumber(m12) ? m12 : 0;
+    out[4] = isNumber(m22) ? m22 : 1;
+    out[5] = isNumber(m32) ? m32 : 0;
+    out[6] = isNumber(m13) ? m13 : 0;
+    out[7] = isNumber(m23) ? m23 : 0;
+    out[8] = isNumber(m33) ? m33 : 1;
 
     return out;
 };
@@ -384,3 +385,5 @@ mat3.str = function(out) {
         "     [" + out[2] + ", " + out[5] + ", " + out[8] + "]"
     );
 };
+
+mat3.string = mat3.toString = mat3.str;
