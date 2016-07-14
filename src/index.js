@@ -1,5 +1,5 @@
-var mathf = require("mathf"),
-    isNumber = require("is_number");
+var mathf = require("@nathanfaucett/mathf"),
+    isNumber = require("@nathanfaucett/is_number");
 
 
 var mat3 = exports;
