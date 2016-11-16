@@ -190,22 +190,23 @@ mat3.inverseMat = function(out, m11, m12, m13, m21, m22, m23, m31, m32, m33) {
 
     if (det === 0) {
         return mat3.identity(out);
+    } else {
+        det = 1 / det;
+
+        out[0] = m0 * det;
+        out[1] = (m23 * m31 - m21 * m33) * det;
+        out[2] = (m21 * m32 - m22 * m31) * det;
+
+        out[3] = m3 * det;
+        out[4] = (m11 * m33 - m13 * m31) * det;
+        out[5] = (m12 * m31 - m11 * m32) * det;
+
+        out[6] = m6 * det;
+        out[7] = (m13 * m21 - m11 * m23) * det;
+        out[8] = (m11 * m22 - m12 * m21) * det;
+
+        return out;
     }
-    det = 1 / det;
-
-    out[0] = m0 * det;
-    out[1] = (m23 * m31 - m21 * m33) * det;
-    out[2] = (m21 * m32 - m22 * m31) * det;
-
-    out[3] = m3 * det;
-    out[4] = (m11 * m33 - m13 * m31) * det;
-    out[5] = (m12 * m31 - m11 * m32) * det;
-
-    out[6] = m6 * det;
-    out[7] = (m13 * m21 - m11 * m23) * det;
-    out[8] = (m11 * m22 - m12 * m21) * det;
-
-    return out;
 };
 
 mat3.inverse = function(out, a) {
@@ -272,8 +273,7 @@ mat3.scale = function(out, a, v) {
     return out;
 };
 
-mat3.makeScale = function(out, v) {
-
+mat3.setScale = function(out, v) {
     return mat3.set(
         out,
         v[0], 0, 0,
@@ -282,7 +282,7 @@ mat3.makeScale = function(out, v) {
     );
 };
 
-mat3.makeRotationX = function(out, angle) {
+mat3.setRotationX = function(out, angle) {
     var c = mathf.cos(angle),
         s = mathf.sin(angle);
 
@@ -294,7 +294,7 @@ mat3.makeRotationX = function(out, angle) {
     );
 };
 
-mat3.makeRotationY = function(out, angle) {
+mat3.setRotationY = function(out, angle) {
     var c = mathf.cos(angle),
         s = mathf.sin(angle);
 
@@ -305,7 +305,7 @@ mat3.makeRotationY = function(out, angle) {
     );
 };
 
-mat3.makeRotationZ = function(out, angle) {
+mat3.setRotationZ = function(out, angle) {
     var c = mathf.cos(angle),
         s = mathf.sin(angle);
 
@@ -350,39 +350,64 @@ mat3.fromQuat = function(out, q) {
     return out;
 };
 
-mat3.equal = function(a, b) {
-    return !(
-        a[0] !== b[0] ||
-        a[1] !== b[1] ||
-        a[2] !== b[2] ||
-        a[3] !== b[3] ||
-        a[4] !== b[4] ||
-        a[5] !== b[5] ||
-        a[6] !== b[6] ||
-        a[7] !== b[7] ||
-        a[8] !== b[8]
-    );
+mat3.fromMat2 = function(out, m) {
+
+    out[0] = m[0];
+    out[1] = m[1];
+    out[2] = 0.0;
+
+    out[3] = m[2];
+    out[4] = m[3];
+    out[5] = 0.0;
+
+    out[6] = 0.0;
+    out[7] = 0.0;
+    out[8] = 1.0;
+
+    return out;
 };
 
-mat3.notEqual = function(a, b) {
-    return (
-        a[0] !== b[0] ||
-        a[1] !== b[1] ||
-        a[2] !== b[2] ||
-        a[3] !== b[3] ||
-        a[4] !== b[4] ||
-        a[5] !== b[5] ||
-        a[6] !== b[6] ||
-        a[7] !== b[7] ||
-        a[8] !== b[8]
+mat3.fromMat32 = mat3.fromMat2;
+
+mat3.fromMat4 = function(out, m) {
+
+    out[0] = m[0];
+    out[1] = m[1];
+    out[2] = m[2];
+
+    out[3] = m[4];
+    out[4] = m[5];
+    out[5] = m[6];
+
+    out[6] = m[8];
+    out[7] = m[9];
+    out[8] = m[10];
+
+    return out;
+};
+
+mat3.equals = function(a, b, e) {
+    return !mat3.notEquals(a, b, e);
+};
+
+mat3.notEquals = function(a, b, e) {
+    return (!mathf.equals(a[0], b[0], e) ||
+        !mathf.equals(a[1], b[1], e) ||
+        !mathf.equals(a[2], b[2], e) ||
+        !mathf.equals(a[3], b[3], e) ||
+        !mathf.equals(a[4], b[4], e) ||
+        !mathf.equals(a[5], b[5], e) ||
+        !mathf.equals(a[6], b[6], e) ||
+        !mathf.equals(a[7], b[7], e) ||
+        !mathf.equals(a[8], b[8], e)
     );
 };
 
 mat3.str = function(out) {
     return (
-        "Mat3[" + out[0] + ", " + out[3] + ", " + out[6] + "]\n" +
-        "     [" + out[1] + ", " + out[4] + ", " + out[7] + "]\n" +
-        "     [" + out[2] + ", " + out[5] + ", " + out[8] + "]"
+        "Mat3[" + out[0] + ", " + out[3] + ", " + out[6] + ",\n" +
+        "     " + out[1] + ", " + out[4] + ", " + out[7] + ",\n" +
+        "     " + out[2] + ", " + out[5] + ", " + out[8] + "]"
     );
 };
 
